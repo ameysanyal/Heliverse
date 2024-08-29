@@ -40,9 +40,8 @@ const CreateUser = () => {
         })
     };
 
-
     return (
-        <div className='pt-16 flex justify-center'>
+        <div className='pt-15 flex justify-center bg-indigo-100 h-screen'>
             <div className='flex flex-row justify-center items-center'>
                 <div className='flex flex-col border-2 border-gray-800 rounded-xl w-[600px] p-2 mx-auto'>
 

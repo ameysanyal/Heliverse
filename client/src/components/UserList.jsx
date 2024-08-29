@@ -19,7 +19,7 @@ const UserList = () => {
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div className="pt-16 bg-indigo-100 w-full overflow-y-auto h-screen">
+        <div className="pt-16 px-6 bg-indigo-100 w-full overflow-y-auto h-screen">
 
             <div className="pt-14 grid justify-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-4 h-full w-full">
                 {users.map(user => (

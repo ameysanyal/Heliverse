@@ -9,14 +9,15 @@ const teamSchema = new mongoose.Schema({
 });
 
 // Middleware to enforce single document in collection
-teamSchema.pre('save', async function (next) {
-    const existingTeam = await mongoose.models.Team.findOne({});
-    if (existingTeam && existingTeam._id.toString() !== this._id.toString()) {
-        const error = new Error('A team already exists. Only one team can be created.');
-        return next(error);
-    }
-    next();
-});
+// teamSchema.pre('save', async function (next) {
+//     const existingTeam = await mongoose.models.Team.findOne({});
+//     if (existingTeam && existingTeam._id.toString() !== this._id.toString()) {
+//         const error = new Error('A team already exists. Only one team can be created.');
+//         console.log(error)
+//         return next(error);
+//     }
+//     next();
+// });
 
 
 const Team = mongoose.model('Team', teamSchema);

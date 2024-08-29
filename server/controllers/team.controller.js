@@ -4,7 +4,7 @@ import Team from '../models/team.model.js'
 export const createTeam = async (req, res) => {
     try {
         const { users } = req.body; // Array of user IDs to form the team
-
+        console.log(users)
         // Fetch users by IDs
         const teamUsers = await User.find({
             _id: { $in: users },
@@ -43,36 +43,7 @@ export const getTeam = async (req, res) => {
     }
 }
 
-export const deleteTeam = async (req, res) => {
-    try {
-        const { urlId } = req.params;
-        const result = await User.findByIdAndDelete(urlId);
 
-        if (!result) {
-            return res.status(404).json({ message: "Team not found" });
-        }
-        return res.status(200).json({ message: 'Team deleted successfully' });
-    }
-    catch (error) {
-        res.status(500).json({ message: 'Error deleting Team', error });
-    }
-}
-
-export const deleteAllTeams = async (req, res) => {
-    try {
-
-        const result = await Team.deleteMany({})
-        if (!result) {
-            return res.status(400).json({ message: "Team not Found" })
-        }
-        return res.status(200).send({ message: "All Teams Deleted successfully" })
-
-    }
-    catch (error) {
-        console.error(error.message);
-        res.status(500).send({ message: error.message });
-    }
-}
 
 export const getAllTeams = async (req, res) => {
     try {
@@ -88,3 +59,70 @@ export const getAllTeams = async (req, res) => {
     }
 }
 
+export const updateTeam = async (req, res) => {
+    try {
+        const { urlId } = req.params;
+
+        const result = await Team.findById(urlId)
+
+        if (!result) {
+            return res.status(400).json({ message: "Team not found" });
+        }
+
+        const { teamMember, operation } = req.body
+
+        if (operation === "add") {
+            const checkMember = result.users.find((m) => m.toString() === teamMember)
+
+            if (checkMember) {
+                return res.status(400).json({ message: 'User Already Added to Team' });
+            }
+
+            result.users.push(teamMember)
+        }
+
+        if (operation === "remove") {
+            result.users.pull(teamMember)
+        }
+        await result.save()
+        return res.status(200).json({ message: "Team Updated Successfully" })
+
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Error updating team', error });
+    }
+
+}
+
+
+
+// export const deleteTeam = async (req, res) => {
+//     try {
+//         const { urlId } = req.params;
+//         const result = await User.findByIdAndDelete(urlId);
+
+//         if (!result) {
+//             return res.status(404).json({ message: "Team not found" });
+//         }
+//         return res.status(200).json({ message: 'Team deleted successfully' });
+//     }
+//     catch (error) {
+//         res.status(500).json({ message: 'Error deleting Team', error });
+//     }
+// }
+
+// export const deleteAllTeams = async (req, res) => {
+//     try {
+
+//         const result = await Team.deleteMany({})
+//         if (!result) {
+//             return res.status(400).json({ message: "Team not Found" })
+//         }
+//         return res.status(200).send({ message: "All Teams Deleted successfully" })
+
+//     }
+//     catch (error) {
+//         console.error(error.message);
+//         res.status(500).send({ message: error.message });
+//     }
+// }
