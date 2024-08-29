@@ -1,14 +1,20 @@
 import User from '../models/user.model.js'
 
 export const createUser = async (req, res) => {
-    try {
-        const { first_name, last_name, email, gender, avatar = "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png", domain, available } = req.body;
 
-        if (!first_name || !last_name || !email || !gender || !avatar || !domain || !available) {
-            return res.status(400).json({
+    let { avatar } = req.body
+    if (!avatar) {
+        avatar = "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
+    }
+    try {
+        const { first_name, last_name, email, gender, domain, available } = req.body;
+
+        if (!first_name || !last_name || !email || !gender || !domain) {
+            return res.status(400).send({
                 message: 'Send all the required fields',
             });
         }
+
 
         // Fetch the user with the highest id
         const lastUser = await User.findOne().sort({ id: -1 });
@@ -25,7 +31,7 @@ export const createUser = async (req, res) => {
         });
     }
     catch (error) {
-        console.log(error.message);
+        console.log(`post request in erro backend`);
         return res.status(500).json({ message: error.message });
     }
 }

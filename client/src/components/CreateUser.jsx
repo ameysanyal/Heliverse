@@ -1,11 +1,21 @@
 import React, { useState } from 'react'
-import { useDispatch } from "react-redux";
-import { createUser } from '../features/users/usersSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { createUser, fetchUsers } from '../features/users/usersSlice';
+import { useSnackbar } from 'notistack';
+
 const CreateUser = () => {
-
-    const [data, setData] = useState({});
+    const { enqueueSnackbar } = useSnackbar();
+    const [data, setData] = useState({
+        first_name: '',
+        last_name: '',
+        email: '',
+        gender: '',
+        avatar: '',
+        domain: '',
+        available: ''
+    });
     const dispatch = useDispatch();
-
+    const { page, searchQuery, filters } = useSelector((state) => state.users);
     const updateData = (e) => {
         setData({
             ...data,
@@ -14,10 +24,22 @@ const CreateUser = () => {
     };
 
     const handleSaveUser = () => {
-        // console.log("user data...", data);
-        dispatch(createUser(data));
-        setData({})
+
+        dispatch(createUser({ data, enqueueSnackbar })).then(() => {
+            dispatch(fetchUsers({ page, searchQuery, ...filters }));
+            setData({
+                first_name: '',
+                last_name: '',
+                email: '',
+                gender: '',
+                avatar: '',
+                domain: '',
+                available: ''
+            });
+
+        })
     };
+
 
     return (
         <div className='pt-16 flex justify-center'>
@@ -29,6 +51,7 @@ const CreateUser = () => {
                         <input
                             type='text'
                             name="first_name"
+                            value={data.first_name}
                             onChange={updateData}
                             className='border-2 border-gray-500 p-1 w-full'
                         />
@@ -38,6 +61,7 @@ const CreateUser = () => {
                         <input
                             type='text'
                             name="last_name"
+                            value={data.last_name}
                             onChange={updateData}
                             className='border-2 border-gray-500 p-1 w-full'
                         />
@@ -49,6 +73,7 @@ const CreateUser = () => {
                             type='text'
                             name="email"
                             onChange={updateData}
+                            value={data.email}
                             className='border-2 border-gray-500 p-1 w-full'
                         />
                     </div>
@@ -57,6 +82,7 @@ const CreateUser = () => {
                         <select
                             name="gender"
                             onChange={updateData}
+                            value={data.gender}
                             className='border-2 border-gray-500 p-1 w-1/3'>
                             <option value="">Select Gender</option>
                             <option value="Male">Male</option>
@@ -70,7 +96,9 @@ const CreateUser = () => {
                         <label className='text-xl text-nowrap mr-14'>Avatar:</label>
                         <input
                             type='text'
+                            placeholder='Enter Image URL'
                             name="avatar"
+                            value={data.avatar}
                             onChange={updateData}
                             className='border-2 border-gray-500 p-1 w-full'
                         />
@@ -80,6 +108,7 @@ const CreateUser = () => {
                         <select
                             name="domain"
                             onChange={updateData}
+                            value={data.domain}
                             className='border-2 border-gray-500 p-1 w-1/3'>
                             <option value="">Select Domain</option>
                             <option value="Sales">Sales</option>
@@ -96,6 +125,7 @@ const CreateUser = () => {
                         <select
                             name="available"
                             onChange={updateData}
+                            value={data.available}
                             className='border-2 border-gray-500 p-1 w-1/3'>
                             <option value="">Select Availability</option>
                             <option value={true}>Available</option>

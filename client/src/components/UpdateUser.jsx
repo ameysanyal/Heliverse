@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from '../features/users/usersSlice';
+import { fetchUsers, updateUser } from '../features/users/usersSlice';
 import { MdOutlineClose } from "react-icons/md"
+import { useSnackbar } from 'notistack';
 
 const UpdateUser = ({ userId, onClose }) => {
+
+    const { enqueueSnackbar } = useSnackbar();
+
     const [id, setId] = useState('')
     const [first_name, setFirstName] = useState('');
     const [last_name, setLastName] = useState('');
@@ -14,7 +18,7 @@ const UpdateUser = ({ userId, onClose }) => {
     const [available, setAvailable] = useState('');
 
     const dispatch = useDispatch();
-    const { users, loading } = useSelector((state) => state.users);
+    const { page, users, searchQuery, filters, loading } = useSelector((state) => state.users);
 
     useEffect(() => {
 
@@ -46,8 +50,10 @@ const UpdateUser = ({ userId, onClose }) => {
         };
 
         console.log("update data..", updatedData);
-        dispatch(updateUser(updatedData));
-        onClose()
+        dispatch(updateUser({ updatedData, enqueueSnackbar })).then(() => {
+            dispatch(fetchUsers({ page, searchQuery, ...filters }));
+            onClose();
+        });
 
     };
     if (loading) {

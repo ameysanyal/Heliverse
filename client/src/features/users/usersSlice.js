@@ -1,4 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import config from '../../../config.js';
+
+const backendUrl = config.backendUrl;
 
 const initialState = {
     users: [],
@@ -21,7 +24,7 @@ export const fetchUsers = createAsyncThunk(
     async (params, { rejectWithValue }) => {
 
         try {
-            const response = await fetch(`http://localhost:3030/api/users?page=${params.page}&search=${params.searchQuery}&domain=${params.domain}&gender=${params.gender}&available=${params.available}`);
+            const response = await fetch(`${backendUrl}?page=${params.page}&search=${params.searchQuery}&domain=${params.domain}&gender=${params.gender}&available=${params.available}`);
             const data = await response.json();
             if (!response.ok) {
                 throw new Error(data.message || 'Failed to fetch users');
@@ -37,23 +40,34 @@ export const fetchUsers = createAsyncThunk(
 
 export const createUser = createAsyncThunk(
     'users/createUser',
-    async (data, { rejectWithValue }) => {
+    async ({ data, enqueueSnackbar }, { rejectWithValue }) => {
 
         try {
-            console.log(data)
             const response = await fetch(
-                "http://localhost:3030/api/users",
+                backendUrl,
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(data),
+                    body: JSON.stringify(data)
                 }
             );
+
             const result = await response.json();
+
+            if (response.status === 400) {
+                enqueueSnackbar(`${result.message} `, { variant: 'error' });
+            }
+
+            if (response.status === 201) {
+                enqueueSnackbar('User Created Successfully', { variant: 'success' });
+            }
+
             return result;
         } catch (error) {
+
+            enqueueSnackbar('Failed to create User', { variant: 'error' });
             return rejectWithValue(error.message);
         }
     }
@@ -61,47 +75,36 @@ export const createUser = createAsyncThunk(
 
 export const deleteUser = createAsyncThunk(
     'users/deleteUser',
-    async ({ id,
-        first_Name,
-        last_Name,
-        email,
-        gender,
-        avatar,
-        domain,
-        available
-    }, { rejectWithValue }) => {
+    async ({ id, enqueueSnackbar }, { rejectWithValue }) => {
+        console.log(id)
         try {
             const response = await fetch(
-                `http://localhost:3030/api/users/${id}`,
+                `${backendUrl}/${id}`,
                 {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        first_Name,
-                        last_Name,
-                        email,
-                        gender,
-                        avatar,
-                        domain,
-                        available
-                    }),
+                    method: "DELETE",
                 }
             );
             const result = await response.json();
+
+            if (response.status === 200) {
+                enqueueSnackbar('User Deleted Successfully', { variant: 'success' });
+            }
+
             return result;
-        } catch (err) {
-            return rejectWithValue(err);
+
+        }
+        catch (error) {
+            enqueueSnackbar('Failed to delete User', { variant: 'error' });
+            return rejectWithValue(error.message);
         }
     }
 )
 
 export const updateUser = createAsyncThunk('users/updateUser',
-    async (updatedData, { rejectWithValue }) => {
+    async ({ updatedData, enqueueSnackbar }, { rejectWithValue }) => {
         try {
             const response = await fetch(
-                `http://localhost:3030/api/users/${updatedData.id}`,
+                `${backendUrl}/${updatedData.id}`,
                 {
                     method: "PUT",
                     headers: {
@@ -110,7 +113,13 @@ export const updateUser = createAsyncThunk('users/updateUser',
                     body: JSON.stringify(updatedData),
                 }
             );
+
             const result = await response.json();
+
+            if (response.status === 200) {
+                enqueueSnackbar(`${result.message}`, { variant: 'success' });
+            }
+
             return result;
         } catch (err) {
             return rejectWithValue(err);
@@ -138,6 +147,7 @@ const usersSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
+
         builder
             .addCase(fetchUsers.pending, (state) => {
                 state.loading = true;
@@ -152,9 +162,18 @@ const usersSlice = createSlice({
             .addCase(fetchUsers.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
+            }).addCase(createUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
             }).addCase(createUser.fulfilled, (state, action) => {
                 state.loading = false;
                 state.users.push(action.payload)
+
+
+            }).addCase(createUser.rejected, (state, action) => {
+
+                state.loading = false;
+                state.error = action.payload;
 
             }).addCase(deleteUser.pending, (state) => {
                 state.loading = true;
@@ -179,7 +198,6 @@ const usersSlice = createSlice({
                 state.users = state.users.map((ele) =>
                     ele.id === action.payload.id ? action.payload : ele
                 );
-                // dispatch(fetchUsers({ page, ...filters }))
             })
             .addCase(updateUser.rejected, (state, action) => {
                 state.loading = false;

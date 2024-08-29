@@ -5,17 +5,14 @@ import UserCard from './UserCard';
 
 const UserList = () => {
     const dispatch = useDispatch();
-    const { page, users, filteredUsers, searchQuery, filters, loading, error } = useSelector((state) => state.users);
+    const { page, users, searchQuery, filters, loading, error } = useSelector((state) => state.users);
 
     useEffect(() => {
         dispatch(fetchUsers({ page, searchQuery, ...filters }));
         console.log(users)
 
-    }, [dispatch, searchQuery, filters, page, filteredUsers]);
+    }, [dispatch, searchQuery, filters, page]);
 
-    useEffect(() => {
-        dispatch(fetchUsers());
-    }, []);
 
 
     if (loading) return <div>Loading...</div>;

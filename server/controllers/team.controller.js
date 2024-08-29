@@ -87,3 +87,4 @@ export const getAllTeams = async (req, res) => {
         res.status(500).json({ message: 'Error retrieving team', error });
     }
 }
+
