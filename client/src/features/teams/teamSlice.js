@@ -15,7 +15,7 @@ export const fetchTeam = createAsyncThunk(
     async (args, { rejectWithValue }) => {
 
         try {
-            const response = await fetch(`${backendUrl}/team/66d04d1e517dafbc1331eecb`);
+            const response = await fetch(`${backendUrl}/api/team/66d04d1e517dafbc1331eecb`);
             const data = await response.json();
             if (!response.ok) {
                 throw new Error(data.message || 'Failed to fetch team');
@@ -34,7 +34,7 @@ export const updateTeam = createAsyncThunk('users/updateUser',
         try {
             console.log(teamMember)
             const response = await fetch(
-                `${backendUrl}/team/66d04d1e517dafbc1331eecb`,
+                `${backendUrl}/api/team/66d04d1e517dafbc1331eecb`,
                 {
                     method: "PUT",
                     headers: {

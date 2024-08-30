@@ -19,7 +19,7 @@ const TeamDetails = () => {
     }, [])
 
     if (team.length === 0) {
-        return <p className='pt-16 text-3xl'>No team created yet.</p>;
+        return <p className='pt-10 flex justify-center items-center h-screen text-3xl text-center bg-indigo-100 '>Loading...</p>;
     }
 
     const handleRemoveMember = (memberId) => {

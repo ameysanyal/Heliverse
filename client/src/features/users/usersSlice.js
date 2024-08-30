@@ -14,7 +14,7 @@ const initialState = {
         gender: '',
         available: '',
     },
-    loading: false,
+    loading: true,
     error: null,
 };
 
@@ -24,7 +24,7 @@ export const fetchUsers = createAsyncThunk(
     async (params, { rejectWithValue }) => {
 
         try {
-            const response = await fetch(`${backendUrl}/users?page=${params.page}&search=${params.searchQuery}&domain=${params.domain}&gender=${params.gender}&available=${params.available}`);
+            const response = await fetch(`${backendUrl}/api/users?page=${params.page}&search=${params.searchQuery}&domain=${params.domain}&gender=${params.gender}&available=${params.available}`);
             const data = await response.json();
             if (!response.ok) {
                 throw new Error(data.message || 'Failed to fetch users');
@@ -44,7 +44,7 @@ export const createUser = createAsyncThunk(
 
         try {
             const response = await fetch(
-                `${backendUrl}/users`,
+                `${backendUrl}/api/users`,
                 {
                     method: "POST",
                     headers: {
@@ -79,7 +79,7 @@ export const deleteUser = createAsyncThunk(
         console.log(id)
         try {
             const response = await fetch(
-                `${backendUrl}/users/${id}`,
+                `${backendUrl}/api/users/${id}`,
                 {
                     method: "DELETE",
                 }
@@ -104,7 +104,7 @@ export const updateUser = createAsyncThunk('users/updateUser',
     async ({ updatedData, enqueueSnackbar }, { rejectWithValue }) => {
         try {
             const response = await fetch(
-                `${backendUrl}/users/${updatedData.id}`,
+                `${backendUrl}/api/users/${updatedData.id}`,
                 {
                     method: "PUT",
                     headers: {

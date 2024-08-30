@@ -14,9 +14,10 @@ const UserList = () => {
     }, [dispatch, searchQuery, filters, page]);
 
 
+    console.log(loading)
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+    if (loading) return (<div className='pt-40 flex justify-center items-center h-screen text-3xl text-center bg-indigo-100'>Loading...</div>)
+    if (error) return <div className='pt-14 text-xl'>Error: {error}</div>;
 
     return (
         <div className="pt-50 md:pt-16 px-6 bg-indigo-100 w-full overflow-y-auto h-screen">
