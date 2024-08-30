@@ -1,6 +1,6 @@
-// config.js
+
 const config = {
-    backendUrl: 'http://localhost:3030/api',
+    backendUrl: 'https://heliverse-server-three.vercel.app/',
 };
 
 export default config;
