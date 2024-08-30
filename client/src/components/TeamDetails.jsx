@@ -30,7 +30,6 @@ const TeamDetails = () => {
     const handleShowProfile = (user) => {
         setUserDetails(user)
         setShowUserDetails(true)
-
     }
 
     return (
@@ -42,19 +41,19 @@ const TeamDetails = () => {
                         key={user._id}
                         className="w-1/2 flex items-center justify-between p-3 bg-indigo-950 text-white rounded-lg shadow-md">
                         <div>
-                            <span className="text-xl font-medium ">
+                            <span className="text-md md:text-xl font-medium ">
                                 {user.first_name} {user.last_name},
                             </span>
-                            <span className="ml-2 text-lg">{user.domain}</span>
+                            <span className="ml-2 text-sm md:text-lg">{user.domain}</span>
                         </div>
                         <div className='flex justify-end space-x-4 mr-2'>
                             <button className="hover:text-green-500 font-semibold text-white">
-                                <CgProfile size={22} title='Profile Details' onClick={() => { handleShowProfile(user) }} />
+                                <CgProfile className='hover:scale-125 transition-transform duration-200' size={22} title='Profile Details' onClick={() => { handleShowProfile(user) }} />
                             </button>
                             <button className="hover:text-red-500 font-semibold text-white" onClick={() => {
                                 handleRemoveMember(user._id)
                             }}>
-                                <IoCloseCircleOutline size={28} title='Remove from team' />
+                                <IoCloseCircleOutline className='hover:scale-125 transition-transform duration-200' size={28} title='Remove from team' />
                             </button>
                         </div>
                     </li>
@@ -64,7 +63,7 @@ const TeamDetails = () => {
             {showUserDetails &&
                 (<div className="fixed z-50 bg-black bg-opacity-60 top-0 left-0 right-0 bottom-0 flex flex-col justify-center items-center" onClick={() => setShowUserDetails(false)}>
                     <div className="bg-white shadow-md rounded-lg p-4 w-72 relative h-72">
-                        <MdMail title="E-mail" onClick={() => { window.location.href = `mailto:${userDetails.email}` }} size={20} />
+                        <MdMail className='hover:scale-125 transition-transform duration-200' title="E-mail" onClick={() => { window.location.href = `mailto:${userDetails.email}` }} size={20} />
                         <img src={userDetails.avatar} alt={`${userDetails.first_name} ${userDetails.last_name}`} className="w-16 h-16 rounded-full mx-auto" />
 
                         <h3 className="text-xl font-semibold text-center my-2">{userDetails.first_name} {userDetails.last_name}</h3>

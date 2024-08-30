@@ -38,11 +38,11 @@ const UserCard = ({ user }) => {
     return (
 
         <div className="bg-white shadow-md rounded-lg p-4 w-72 relative h-72">
-            <MdMail title="E-mail" onClick={() => { window.location.href = `mailto:${user.email}` }} size={20} />
+            <MdMail className='hover:scale-125 transition-transform duration-200' title="E-mail" onClick={() => { window.location.href = `mailto:${user.email}` }} size={20} />
             <img src={user.avatar} alt={`${user.first_name} ${user.last_name}`} className="w-16 h-16 rounded-full mx-auto" />
             <div className='absolute gap-4 flex  top-4 right-2'>
-                <MdDeleteForever className='self-center' title="DeleteUser" size={22} onClick={handleDeleteUser} />
-                <FaEdit title="EditUser" size={20} onClick={() => setShowEdit(true)} />
+                <MdDeleteForever className='self-center hover:scale-125 transition-transform duration-200' title="DeleteUser" size={22} onClick={handleDeleteUser} />
+                <FaEdit title="EditUser" className='hover:scale-125 transition-transform duration-200' size={20} onClick={() => setShowEdit(true)} />
             </div>
             <h3 className="text-xl font-semibold text-center mt-2">{user.first_name} {user.last_name}</h3>
             <p className="text-center text-gray-700">Id: {user.id}</p>

@@ -16,6 +16,7 @@ const CreateUser = () => {
     });
     const dispatch = useDispatch();
     const { page, searchQuery, filters } = useSelector((state) => state.users);
+
     const updateData = (e) => {
         setData({
             ...data,
@@ -42,7 +43,7 @@ const CreateUser = () => {
 
     return (
         <div className='pt-15 flex justify-center bg-indigo-100 h-screen'>
-            <div className='flex flex-row justify-center items-center'>
+            <div className='w-1/2 flex flex-row justify-center items-center'>
                 <div className='flex flex-col border-2 border-gray-800 rounded-xl w-[600px] p-2 mx-auto'>
 
                     <div className='flex my-2'>
