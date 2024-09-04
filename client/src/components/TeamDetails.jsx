@@ -40,17 +40,18 @@ const TeamDetails = () => {
                     <li
                         key={user._id}
                         className="w-1/2 flex items-center justify-between p-3 bg-indigo-950 text-white rounded-lg shadow-md">
-                        <div>
-                            <span className="text-md md:text-xl font-medium ">
+                        <div className='flex flex-col sm:flex-row'>
+                            <span className="text-md sm:text-xl font-medium">
                                 {user.first_name} {user.last_name},
                             </span>
-                            <span className="ml-2 text-sm md:text-lg">{user.domain}</span>
+
+                            <span className="ml-2 text-sm sm:text-lg">{user.domain}</span>
                         </div>
                         <div className='flex justify-end space-x-4 mr-2'>
-                            <button className="hover:text-green-500 font-semibold text-white">
+                            <button className="text-green-500 font-semibold" >
                                 <CgProfile className='hover:scale-125 transition-transform duration-200' size={22} title='Profile Details' onClick={() => { handleShowProfile(user) }} />
                             </button>
-                            <button className="hover:text-red-500 font-semibold text-white" onClick={() => {
+                            <button className="text-red-500 font-semibold" onClick={() => {
                                 handleRemoveMember(user._id)
                             }}>
                                 <IoCloseCircleOutline className='hover:scale-125 transition-transform duration-200' size={28} title='Remove from team' />

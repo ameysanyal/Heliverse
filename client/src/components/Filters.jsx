@@ -20,8 +20,8 @@ const Filters = () => {
     return (
         <div className="pt-14 w-full flex flex-wrap justify-center md:justify-evenly gap-4 p-4 bg-indigo-100 rounded-md top-0 fixed z-20">
             <SearchBar />
-            <p className='font-semibold text-center md:text-left'>Filtered Users: <br /> {filteredUsers}</p>
-            <select name="domain" onChange={handleFilterChange} className="p-1 border rounded-md border-indigo-950 w-full md:w-44">
+            <p className='self-center font-semibold text-center md:text-left'>Filtered Users: <br /> {filteredUsers}</p>
+            <select name="domain" onChange={handleFilterChange} className="p-1 h-10 self-center border rounded-md border-indigo-950 w-full md:w-44">
                 <option value="">All Domains</option>
                 <option value="Sales">Sales</option>
                 <option value="Finance">Finance</option>
@@ -32,7 +32,7 @@ const Filters = () => {
                 <option value="Business Development">Business Development</option>
             </select>
 
-            <select name="gender" onChange={handleFilterChange} className="p-1 border rounded-md border-indigo-950 w-full md:w-36">
+            <select name="gender" onChange={handleFilterChange} className="p-1 h-10 self-center border rounded-md border-indigo-950 w-full md:w-36">
                 <option value="">All Genders</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -41,7 +41,7 @@ const Filters = () => {
                 <option value="Polygender">Polygender</option>
             </select>
 
-            <select name="available" onChange={handleFilterChange} className="p-1 border rounded-md  border-indigo-950 w-full md:w-36">
+            <select name="available" onChange={handleFilterChange} className="p-1 h-10 self-center border rounded-md  border-indigo-950 w-full md:w-36">
                 <option value="">Availability</option>
                 <option value="true">Available</option>
                 <option value="false">Not Available</option>
