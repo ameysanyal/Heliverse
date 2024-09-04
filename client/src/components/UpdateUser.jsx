@@ -146,7 +146,7 @@ const UpdateUser = ({ userId, onClose }) => {
                                 <option value={false}>Not Available</option>
                             </select>
                         </div>
-                        <button className='p-2 bg-indigo-500 m-2 w-1/4 self-center text-white font-bold' onClick={handleUpdateUser}>
+                        <button className='p-2 bg-indigo-500 hover:bg-indigo-700 m-2 w-1/4 self-center text-white font-bold rounded-lg' onClick={handleUpdateUser}>
                             Save
                         </button>
                     </div>

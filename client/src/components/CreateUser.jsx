@@ -132,7 +132,7 @@ const CreateUser = () => {
                             <option value={false}>Not Available</option>
                         </select>
                     </div>
-                    <button className='p-2 bg-gray-800 m-2 w-1/4 self-center text-white font-bold' onClick={handleSaveUser}>
+                    <button className='p-2 bg-indigo-500 m-2 w-1/4 self-center text-white font-bold rounded-lg hover:bg-indigo-700' onClick={handleSaveUser}>
                         Save
                     </button>
                 </div>

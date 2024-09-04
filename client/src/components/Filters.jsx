@@ -18,7 +18,7 @@ const Filters = () => {
     };
 
     return (
-        <div className="pt-14 w-full flex flex-wrap justify-center md:justify-evenly gap-4 p-4 bg-indigo-100 rounded-md top-0 fixed z-20">
+        <div className="pt-14 w-full flex flex-wrap justify-center md:justify-evenly gap-2 p-4 bg-indigo-100 rounded-md top-0 fixed z-20">
             <SearchBar />
             <p className='self-center font-semibold text-center md:text-left'>Filtered Users: <br /> {filteredUsers}</p>
             <select name="domain" onChange={handleFilterChange} className="p-1 h-10 self-center border rounded-md border-indigo-950 w-full md:w-44">

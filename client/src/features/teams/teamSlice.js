@@ -20,7 +20,7 @@ export const fetchTeam = createAsyncThunk(
             if (!response.ok) {
                 throw new Error(data.message || 'Failed to fetch team');
             }
-            console.log(data.users)
+
 
             return data.users;
         } catch (error) {
@@ -32,7 +32,7 @@ export const fetchTeam = createAsyncThunk(
 export const updateTeam = createAsyncThunk('users/updateUser',
     async ({ teamMember, operation, enqueueSnackbar }, { rejectWithValue }) => {
         try {
-            console.log(teamMember)
+
             const response = await fetch(
                 `${backendUrl}/api/team/66d04d1e517dafbc1331eecb`,
                 {
