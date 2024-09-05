@@ -14,15 +14,13 @@ const UserList = () => {
     }, [dispatch, searchQuery, filters, page]);
 
 
-    console.log(loading)
-
-    if (loading) return (<div className='pt-40 flex justify-center items-center h-screen text-3xl text-center bg-indigo-100'>Loading...</div>)
-    if (error) return <div className='pt-14 text-xl'>Error: {error}</div>;
+    if (loading) return (<div className='w-screen absolute top-28 sm:top-2 flex justify-center items-center h-screen text-3xl text-center bg-indigo-100'>Loading...</div>)
+    if (error) return <div className='text-xl'>Error: {error}</div>;
 
     return (
-        <div className="pt-50 md:pt-16 px-6 bg-indigo-100 w-full overflow-y-auto h-screen">
+        <div className="px-6 bg-indigo-100 w-full overflow-y-auto h-screen">
 
-            <div className="pt-14 grid justify-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-4 h-full w-full">
+            <div className="grid justify-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-4 h-full w-full">
                 {users.map(user => (
                     <UserCard key={user._id} user={user} />
                 ))}

@@ -12,6 +12,7 @@ function App() {
   const location = useLocation();
 
   return (
+
     <Provider store={store}>
       <Navbar />
       {location.pathname === '/' && <Filters />}
@@ -21,6 +22,7 @@ function App() {
         <Route path="/team" element={<TeamDetails />} />
       </Routes>
     </Provider>
+
   );
 }
 
